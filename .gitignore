@@ -1,0 +1,10 @@
+/api-test
+.env
+.idea
+.vscode
+.DS_Store
+bin
+vendor
+*.log
+*.exe
+*.out
