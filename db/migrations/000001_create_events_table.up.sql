@@ -4,5 +4,7 @@ CREATE TABLE events (
     description TEXT NOT NULL,
     location VARCHAR(255) NOT NULL,
     date_time TIMESTAMP NOT NULL,
-    user_id INTEGER NOT NULL
+    user_id INTEGER NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );

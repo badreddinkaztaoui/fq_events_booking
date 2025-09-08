@@ -9,25 +9,27 @@ import (
 	_ "github.com/jackc/pgx/v5/stdlib"
 )
 
-func ConnectDB(dcs string) (*sql.DB, error) {
-	db, err := sql.Open("pgx", dcs)
+var DB *sql.DB
+
+func ConnectDB(dcs string) {
+	var err error
+
+	DB, err = sql.Open("pgx", dcs)
 	if err != nil {
-		return nil, err
+		panic(err)
 	}
 
-	db.SetMaxOpenConns(25)
-	db.SetMaxIdleConns(25)
-	db.SetConnMaxLifetime(5 * time.Minute)
+	DB.SetMaxOpenConns(25)
+	DB.SetMaxIdleConns(25)
+	DB.SetConnMaxLifetime(5 * time.Minute)
 
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 
-	if err = db.PingContext(ctx); err != nil {
-		db.Close()
-		return nil, err
+	if err = DB.PingContext(ctx); err != nil {
+		DB.Close()
+		panic(err)
 	}
 
 	log.Println("Database connection successful!")
-
-	return db, nil
 }
