@@ -1,17 +1,17 @@
 package routes
 
 import (
+	"database/sql"
 	"net/http"
 
-	"github.com/badreddinkaztaoui/fq_events_booking/internal/database"
 	"github.com/badreddinkaztaoui/fq_events_booking/internal/handlers"
 	"github.com/badreddinkaztaoui/fq_events_booking/internal/repository"
 	"github.com/gin-gonic/gin"
 )
 
-func RegisterEventRoutes(server *gin.Engine) {
-	eventsRepo := repository.NewEventRepo(database.DB)
-	userRepo := repository.NewUsersRepo(database.DB)
+func RegisterEventRoutes(server *gin.Engine, db *sql.DB) {
+	eventsRepo := repository.NewEventRepo(db)
+	userRepo := repository.NewUsersRepo(db)
 
 	eventsHandler := handlers.NewEventHandler(eventsRepo)
 	userHandler := handlers.NewUserHandler(userRepo)
